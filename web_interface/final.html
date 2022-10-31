@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Router Upgrade</title>
+    <link rel="stylesheet" href="./index.css" />
+    <script src="./jquery.min.js"></script>
+    <style>
+      
+.insider{
+  width: 100%;
+  margin-top: 50px;
+  height: max-content;
+  text-align: center;
+}
+.load{
+  display: inline-block;
+        margin: 0 auto;
+        padding: 3px;
+}
+      .LoaderBalls {
+        width: 90px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .LoaderBalls__item {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #59abe3;
+      }
+      .LoaderBalls__item:nth-child(1) {
+        animation: bouncing 0.4s alternate infinite
+          cubic-bezier(0.6, 0.05, 0.15, 0.95);
+      }
+      .LoaderBalls__item:nth-child(2) {
+        animation: bouncing 0.4s 0.1s alternate infinite
+          cubic-bezier(0.6, 0.05, 0.15, 0.95) backwards;
+      }
+      .LoaderBalls__item:nth-child(3) {
+        animation: bouncing 0.4s 0.2s alternate infinite
+          cubic-bezier(0.6, 0.05, 0.15, 0.95) backwards;
+      }
+
+      @keyframes bouncing {
+        0% {
+          transform: translate3d(0, 10px, 0) scale(1.2, 0.85);
+        }
+        100% {
+          transform: translate3d(0, -20px, 0) scale(0.9, 1.1);
+        }
+      }
+      .loader-text{
+        margin-left: 20px;
+      }
+      .hid{
+        display: none;
+        visibility: hidden;
+      }
+
+      .fin{
+        margin: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="final">
+      <h2>Upgrading...</h2>
+      <div class="insider">
+        <div class="load">
+          <div class="LoaderBalls">
+            <div class="LoaderBalls__item"></div>
+            <div class="LoaderBalls__item"></div>
+            <div class="LoaderBalls__item"></div>
+          </div>
+          <h1 class="loader-text" id="loadtxt">0%</h1>
+        </div>
+        <h1 class="fin hid">
+        ✅ UPGRADED
+        </h1>
+      </div>
+          <p style="text-align: center;">
+            Once the process is complete, reboot your router.
+          </p>
+
+
+    </div>
+      
+    <script>
+      var num = 1;
+      var s = setInterval(()=>{
+        var element = $("#loadtxt");
+        element[0].innerHTML = num.toString()+"%";
+        num +=1;
+        if(num===101){
+          clearInterval(s);
+          setTimeout(()=>{
+            var cl = $(".load")
+            var upg = $(".fin")
+            cl.addClass("hid");
+            upg.removeClass("hid");
+          },1000)
+        }
+      },1000);
+    </script>
+  </body>
+</html>

