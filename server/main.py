@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 from subprocess import Popen,call,PIPE
 from fastapi.middleware.cors import CORSMiddleware
+import uvicorn
 
 app = FastAPI()
 origins =['*']
@@ -32,3 +33,7 @@ def read_root(passwd:str):
     else:
         print("Incorrect Password : "+ passwd)
         return {"result": False}
+    
+
+if __name__ == "__main__":
+    uvicorn.run(app, host="0.0.0.0", port=8000, log_level="info")    
